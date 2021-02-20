@@ -12,6 +12,8 @@ package-lock.json
 
 # production
 /build
+/CompareTool-*
+/dist
 
 # misc
 .DS_Store

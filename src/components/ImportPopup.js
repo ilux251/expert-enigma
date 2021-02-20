@@ -1,6 +1,9 @@
 import React from "react"
 import readXlsxFile from 'read-excel-file'
 
+const electron = window.require('electron');
+const ipc = electron.ipcRenderer;
+
 class ImportPopup extends React.Component {
 
 		componentDidMount = () => 
@@ -20,6 +23,12 @@ class ImportPopup extends React.Component {
 			this.props.changeState({key: "showPopup", value: false})
     }
 
+		createNvFile = () =>
+		{
+			console.log("xxx");
+			ipc.emit("create-file", {name: "filename 1", date: new Date(), isDone: false, content: []});
+		}
+
     render() {
        return (
             <div class={`popup ${this.props.showImportPopup ? "active" : "hidden"}`}>
@@ -28,7 +37,7 @@ class ImportPopup extends React.Component {
 								<div><input id="inputImport" type="file" placeholder="Datei auswählen"/></div>
 								<div><input type="text" placeholder="Datum setzen"/></div>
 								<div class="buttonContainer">
-									<button>NV</button>
+									<button onClick={this.createNvFile}>NV</button>
 									<button>Persönliche Dateien</button>
 								</div>
 							</div>
