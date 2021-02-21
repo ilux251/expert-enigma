@@ -3,12 +3,9 @@ const {ipcMain} = require("electron");
 
 module.exports = (win) => {
   ipcMain.on("nv/create-file", (_, data) => {
-    console.log("xxxx", data);
-  
     NvFileController.createFile(data)
       .then((response) => {
-        console.log(response)
-        win.send("nv/create-file/reply", {response});
+        win.send("nv/create-file/reply", response);
       })
       .catch(console.error);
   });
@@ -18,6 +15,6 @@ module.exports = (win) => {
       .then(response => {
         win.send("nv/get-files/reply", response);
       })
-      .catch(console.error)
+      .catch(error => console.log("get-files", error))
   })
 }

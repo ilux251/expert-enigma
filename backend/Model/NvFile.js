@@ -7,4 +7,6 @@ const NvFile = new Schema({
   content: Array
 });
 
+NvFile.plugin(idvalidator);
+
 module.exports = model("NvFile", NvFile);

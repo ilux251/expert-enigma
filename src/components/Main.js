@@ -1,6 +1,14 @@
 import React from 'react';
 import View from './View';
 
+const {ipcRenderer} = window.require("electron");
+const mongoose = window.require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
+
+ObjectId.prototype.valueOf = function () {
+	return this.toString();
+};
+
 class Main extends React.Component {
 
   constructor () {
@@ -8,65 +16,18 @@ class Main extends React.Component {
 
     this.state = {
       currentTab: "nvView",
-      nvFiles: [{
-        id: 1,
-        name: "filename 1",
-        date: "10.02.2020",
-        isDone: false
-      },
-      {
-        id: 2,
-        name: "filename 2",
-        date: "10.02.1998",
-        isDone: true
-      },
-      {
-        id: 3,
-        name: "das ist ein langer dateiname!!!",
-        date: "10.02.1998",
-        isDone: true
-      }],
-      pdFiles: [{
-        id: 1,
-        name: "pd - filename 1",
-        date: "10.02.2020",
-        isDone: false
-      },
-      {
-        id: 2,
-        name: "pd - filename 2",
-        date: "10.02.1998",
-        isDone: true
-      },
-      {
-        id: 3,
-        name: "pd - das ist ein langer dateiname!!!",
-        date: "10.02.1998",
-        isDone: true
-      }],
-      pdMap: {
-        1: {
-          id: 1,
-          name: "pd - filename 1",
-          date: "10.02.2020",
-          isDone: false
-        },
-        2: {
-          id: 2,
-          name: "pd - filename 2",
-          date: "10.02.1998",
-          isDone: true
-        },
-        3: {
-          id: 3,
-          name: "pd - das ist ein langer dateiname!!!",
-          date: "10.02.1998",
-          isDone: true
-        }
-      }
+      nvFiles: [],
+      pdFiles: []
     }
   }
-
+  componentDidMount = () =>
+  {
+    ipcRenderer.on("nv/get-files/reply", (event,data) => {
+      console.log("Ritsch ist der aller Beste!", data)
+      this.setState ({nvFiles: data})
+    })
+    ipcRenderer.send("nv/get-files");
+  }
 
   showComparePopup = () =>
   {
@@ -90,7 +51,7 @@ class Main extends React.Component {
 
   getToggledMapById = (files, id) => {
     return files.map(file => {
-      return file.id === id ? {...file, isDone: !file.isDone} : file;
+      return file._id == id ? {...file, isDone: !file.isDone} : file;
     });
   }
  
@@ -105,8 +66,8 @@ class Main extends React.Component {
               <button id="nvTab" onClick={() => this.changeView("nvView")}>NV Dateien</button>
               <button id="pdTab" onClick={() => this.changeView("pdView")}>Persönliche Dateien</button>
             </div>
-            <View id="nvView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} data={this.state.nvFiles} changeStatus={this.changeStatusForNvFile}/>
-            <View id="pdView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} data={this.state.pdFiles} changeStatus={this.changeStatusForPdFile}/>
+            <View id="nvView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.nvFiles} changeStatus={this.changeStatusForNvFile}/>
+            <View id="pdView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.pdFiles} changeStatus={this.changeStatusForPdFile}/>
           </div>
         </main>
       );

@@ -3,13 +3,7 @@ const NvFile = require("../Model/NvFile");
 class NvFileController
 {
   getFiles = () => {
-    return NvFile.find({})
-      .then(response => {
-        return response;
-      })
-      .error(error => {
-        return error
-      });
+    return NvFile.find({}).lean("_id");
   }
 
   createFile = (data) => {
@@ -17,7 +11,7 @@ class NvFileController
       .then(response => {
         return response;
       })
-      .error(error => {
+      .catch(error => {
         return error
       });
   }

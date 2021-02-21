@@ -28,6 +28,8 @@ function createWindow () {
   NvFileApi(win);
 
   win.loadURL(path.join(__dirname, "dist", "index.html"));
+
+  win.webContents.openDevTools();
 }
 
 app.whenReady().then(createWindow)

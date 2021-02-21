@@ -1,9 +1,14 @@
 import React from "react"
+import dateFormat from "dateformat"
   
 class View extends React.Component {
 
-  componentDidMount = () => {
-    console.log("xxx", this.props);
+  componentDidUpdate = () => {
+    
+  }
+
+  dateToString = (date) => {
+    return dateFormat(date, "dd mm yyyy")
   }
   
   render() { 
@@ -21,11 +26,11 @@ class View extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.data.map((value) => (
-              <tr>
-                <td>{value.name}</td>
-                <td>{value.date}</td>
-                <td><input type="checkbox" checked={value.isDone} onChange={() => this.props.changeStatus(value.id)}/></td>
+            {this.props.documents.map((value) => (
+              <tr key={value._id.id}>
+                <td>{value.filename}</td>
+                <td>{this.dateToString(value.date)}</td>
+                <td><input type="checkbox" checked={value.isDone} onChange={() => this.props.changeStatus(value._id)}/></td>
               </tr>
             ))}
           </tbody>
