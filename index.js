@@ -1,45 +1,33 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const mongoose = require("mongoose");
+const path = require("path");
+const NvFileController = require("./backend/Controller/NvFile");
 const NvFileApi = require("./backend/API/NvFile");
 
-require('electron-reload')(__dirname);
+require('electron-reload')(__dirname, {
+  electron: path.join(__dirname, "node_modules", ".bin", "electron")
+});
 
 const url = 'mongodb://localhost:27017/testdb';
-
-NvFileApi();
 
 mongoose.connect(url, { useNewUrlParser: true }, err => {
   if (!err) console.log("Successful connection to database");
   else console.log("Connection to database failed.");
 });
 
-// const FileSchema = new mongoose.Schema({
-//   filename: String,
-//   date: String,
-//   isDone: Boolean
-// });
-
-// const FileModel = mongoose.model("File", FileSchema);
-
-// FileModel.insertMany({
-//   name: "Filename 1",
-//   date: "20.02.2021",
-//   isDone: false
-// });
-
-// FileModel.find({}).then(docs => console.log("xxx", docs));
-
 function createWindow () {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 800,
     webPreferences: {
       nodeIntegration: true,
-      preload: __dirname + '/preload.js'
+      enableRemoteModule: true
     }
   })
 
-  win.loadURL("http://localhost:5000");
+  NvFileApi(win);
+
+  win.loadURL(path.join(__dirname, "dist", "index.html"));
 }
 
 app.whenReady().then(createWindow)
@@ -49,28 +37,6 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
-
-ipcMain.on("create-file", (event, data) => {
-  console.log("xxxx", event, data);
-
-  NvFileController.createFile(data)
-    .then((response) => {
-      console.log("create-file", response);
-      event.reply(response);
-    })
-    .catch(console.errror);
-});
-
-app.on("create-file", (event, data) => {
-  console.log("xxxx", event, data);
-
-  NvFileController.createFile(data)
-    .then((response) => {
-      console.log("create-file", response);
-      event.reply(response);
-    })
-    .catch(console.errror);
-});
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {

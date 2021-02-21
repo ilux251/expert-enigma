@@ -2,15 +2,31 @@ const NvFile = require("../Model/NvFile");
 
 class NvFileController
 {
-  createFile = async (data) => {
-    return NvFile.insertMany(data);
+  getFiles = () => {
+    return NvFile.find({})
+      .then(response => {
+        return response;
+      })
+      .error(error => {
+        return error
+      });
   }
 
-  deleteFile = async (id) => {
-    return NvFile.deleteOne({_id: id}).then(response =>
-      {return response;}
-    )
+  createFile = (data) => {
+    return NvFile.insertMany(data)
+      .then(response => {
+        return response;
+      })
+      .error(error => {
+        return error
+      });
+  }
+
+  deleteFile = (id) => {
+    return NvFile.deleteOne({_id: id}).then(response => {
+      return response;
+    });
   }
 }
 
-module.exports = NvFileController;
+module.exports = new NvFileController();

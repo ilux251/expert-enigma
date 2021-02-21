@@ -119,7 +119,7 @@ td, th
 .iconButton
 {
 	background: none;
-	background-image: url("./img/importieren.png");
+	background-image: url("img/importieren.png");
 	height: 32px;
 	width: 32px;
 	background-repeat: no-repeat;

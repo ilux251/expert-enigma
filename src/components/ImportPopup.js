@@ -1,8 +1,8 @@
 import React from "react"
 import readXlsxFile from 'read-excel-file'
 
-const electron = window.require('electron');
-const ipc = electron.ipcRenderer;
+const {ipcRenderer, remote, shell} = window.require("electron");
+const {dialog} = remote;
 
 class ImportPopup extends React.Component {
 
@@ -25,9 +25,32 @@ class ImportPopup extends React.Component {
 
 		createNvFile = () =>
 		{
-			console.log("xxx");
-			ipc.emit("create-file", {name: "filename 1", date: new Date(), isDone: false, content: []});
+      // ipcRenderer.send("nv/create-file", {filename: "Filename 1", date: new Date(), isDone: false, content: []});
+      ipcRenderer.send("nv/get-files");
 		}
+
+    componentDidMount = () =>
+    {
+      ipcRenderer.on("nv/create-file/reply", this.eventHandler);
+      ipcRenderer.on("nv/get-files/reply", this.eventHandler);
+    }
+
+    componentWillUnmount = () => 
+    {
+      ipcRenderer.removeListener("nv/create-file/reply", this.removeHandler);
+      ipcRenderer.removeListener("nv/get-files/reply", this.removeHandler);
+    }
+
+    eventHandler = (_, data) =>
+    {
+      console.log("eventHandler", data[0]._doc.filename);
+      console.log("eventHandler", data[0]);
+    }
+
+    removeHandler = (_, data) =>
+    {
+      console.log("removeHandler", data);
+    }
 
     render() {
        return (
