@@ -6,54 +6,63 @@
 
 body
 {
-  background-color:#edf2f4;
+  background: #36425d;
 }
 
 header
 {
-  background-color: #e36414;
-  height: 80px;
-  line-height: 80px;
-  padding-left: 20px;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 25px;
   color: #fff;
-  position: relative
+  letter-spacing: 1px;
+  font-size: 10px;
+  
+  
+
 }
 
 header .iconButton
 {
   position: absolute;
   right: 0;
-  top: 50%;
+  top: 4%;
   transform: translateY(-50%);
 }
 
 main
 {
-  margin: 5px 50px;
-  padding: 10px;
+  margin: 5px 25px;
 }
 
 .tabContainer
 {
   height: calc(100vh - 100px - 80px);
   position: relative;
+  
 }
 
 .view
 {
-  background-color: #fff;
+  color: #fff;
   height: 100%;
   padding: 10px;
+  border-radius: 8px;
+  background: linear-gradient( rgb(35, 39, 54) 0%, #2a354c 100%);
 }
 
 button
 {
   border: 0;
-  padding: 10px 30px;
-  color: #000;
-  background-color: #fff;
+  padding: 10px 40px;
+  background-color: #29375E;
+	color: #03121f;
   outline: none;
   cursor: pointer;
+  background: linear-gradient(90deg, #ac6bd4a9 0%, #515ada 100%);
+  font-size: 20px;
+  
+  
 }
 
 .tabs button
@@ -71,7 +80,7 @@ button
 .pdView #pdTab,
 .nvView #nvTab
 {
-  padding: 12px;
+  box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
 }
 
 .view
@@ -104,7 +113,9 @@ td, th
 {
   position: absolute;
   right: 0; 
-	top: -5px;
+	top: 0px;
+ 
+ 
 }
 
 #compareButton button
@@ -112,8 +123,8 @@ td, th
   border-radius: 20px;
 	padding-left: 20px;
 	padding-right: 20px;
-	background-color: #06d6a0;
-	color: #edf2f4;
+	background-color: #070A15;
+	color: #03121f;
 }
 
 .iconButton
@@ -151,7 +162,7 @@ td, th
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fff;
+  background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
   padding: 25px;
   padding-top: 40px;
   z-index: 1;
@@ -181,7 +192,8 @@ td, th
 
 .tabs button
 {
-  margin-left: 10px;
+  margin-left: 1px;
+  border-radius: 5px;
 }
 
 .closePopup

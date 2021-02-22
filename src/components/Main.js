@@ -60,11 +60,11 @@ class Main extends React.Component {
         <main>
           <div class={`tabContainer ${this.state.currentTab}`}>
             <div id="compareButton">
-              <button onClick={this.showComparePopup}>vergleichen</button>
+              {/* <button onClick={this.showComparePopup}>vergleichen</button> */}
             </div>
             <div class="tabs">
-              <button id="nvTab" onClick={() => this.changeView("nvView")}>NV Dateien</button>
-              <button id="pdTab" onClick={() => this.changeView("pdView")}>Persönliche Dateien</button>
+              {/* <button id="nvTab" onClick={() => this.changeView("nvView")}>NV Dateien</button> */}
+              {/* <button id="pdTab" onClick={() => this.changeView("pdView")}>PD Dateien</button> */}
             </div>
             <View id="nvView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.nvFiles} changeStatus={this.changeStatusForNvFile}/>
             <View id="pdView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.pdFiles} changeStatus={this.changeStatusForPdFile}/>

@@ -64,7 +64,7 @@ class ImportPopup extends React.Component {
 								<div><input type="text" placeholder="Datum setzen"/></div>
 								<div class="buttonContainer">
 									<button onClick={this.createNvFile}>NV</button>
-									<button>Persönliche Dateien</button>
+									<button>PD</button>
 								</div>
 							</div>
             </div>

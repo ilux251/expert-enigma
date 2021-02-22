@@ -12,7 +12,7 @@ class Header extends React.Component {
       return (
         <header>
           <h1>SANRIT</h1>
-          <button class="iconButton" onClick={this.showPopup}></button>
+          {/* <button class="iconButton" onClick={this.showPopup}></button> */}
         </header>
       );
    }
