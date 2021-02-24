@@ -11,7 +11,7 @@ class Header extends React.Component {
    render() {
       return (
         <header>
-          <button class="importButton" onClick={this.showPopup}><span className="icon"></span>Importieren</button>
+          <button className="importButton" onClick={this.showPopup}><span className="icon"></span>Importieren</button>
         </header>
       );
    }

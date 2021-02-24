@@ -10,9 +10,9 @@ class ImportPopup extends React.Component {
 
     render() {
        return (
-            <div class={`popup ${this.props.showComparePopup ? "active" : "hidden"}`}>
-							<div class="closePopup" onClick={this.closePopup}></div>
-							<div class="container">
+            <div className={`popup ${this.props.showComparePopup ? "active" : "hidden"}`}>
+							<div className="closePopup" onClick={this.closePopup}></div>
+							<div className="container">
 								ComparePopup
 							</div>
             </div> 

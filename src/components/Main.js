@@ -22,8 +22,7 @@ class Main extends React.Component {
   }
   componentDidMount = () =>
   {
-    ipcRenderer.on("nv/get-files/reply", (event,data) => {
-      console.log("Ritsch ist der aller Beste!", data)
+    ipcRenderer.on("nv/get-files/reply", (_, data) => {
       this.setState ({nvFiles: data})
     })
     ipcRenderer.send("nv/get-files");
@@ -58,11 +57,11 @@ class Main extends React.Component {
    render() {
       return (
         <main>
-          <div class={`tabContainer ${this.state.currentTab}`}>
+          <div className={`tabContainer ${this.state.currentTab}`}>
             <div id="compareButton">
               {/* <button onClick={this.showComparePopup}>vergleichen</button> */}
             </div>
-            <div class="tabs">
+            <div className="tabs">
               <button id="nvTab" onClick={() => this.changeView("nvView")}>NV Dateien</button>
               <button id="pdTab" onClick={() => this.changeView("pdView")}>PD Dateien</button>
             </div>

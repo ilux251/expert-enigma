@@ -1,18 +1,32 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const mongoose = require("mongoose");
 const path = require("path");
-const NvFileController = require("./backend/Controller/NvFile");
 const NvFileApi = require("./backend/API/NvFile");
+const {spawn} = require("child_process");
 
 require('electron-reload')(__dirname, {
   electron: path.join(__dirname, "node_modules", ".bin", "electron")
 });
 
-const url = 'mongodb://localhost:27017/testdb';
+const url = 'mongodb://localhost:27018/testdb';
 
-mongoose.connect(url, { useNewUrlParser: true }, err => {
-  if (!err) console.log("Successful connection to database");
-  else console.log("Connection to database failed.");
+const pipe = spawn("mongod", ["-dbpath=D:\\mongodb\\data", "-port", "27018"]);
+
+pipe.stdout.on("data", function (data) {
+  console.log(data.toString("utf8"));
+
+  mongoose.connect(url, { useNewUrlParser: true }, err => {
+    if (!err) console.log("Successful connection to database");
+    else console.log("Connection to database failed.");
+  });
+});
+
+pipe.stderr.on("data", (data) => {
+  console.log(data.toString("utf8"));
+});
+
+pipe.on("close", (code) => {
+  console.log("Process exited with code: "+ code);
 });
 
 function createWindow () {

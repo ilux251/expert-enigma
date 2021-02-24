@@ -67,6 +67,8 @@ button
   color: #fff;
   width: 100%;
   height: 100%;
+  display: none;
+  position: relative;
 }
 
 .nvView #nvTab,
@@ -82,11 +84,6 @@ button
   display: block;
 }
 
-.view
-{
-  display: none;
-}
-
 .documentEntry
 {
   background: #54595f;
@@ -96,6 +93,7 @@ button
   height: 50px;
   border-radius: 4px;
   justify-content: space-around;
+  border-left: 3px solid #ffba00; /* green: #05c705 */
 }
 
 .documentEntry > div
@@ -127,6 +125,7 @@ input[type="checkbox"] + label:before {
   font: 16px;
   height: 16px;
   width: 16px;
+  border-radius: 5px;
 }
 
 input[type="checkbox"] + label {
@@ -135,20 +134,19 @@ input[type="checkbox"] + label {
 }
 
 input[type="checkbox"]:checked + label:before {
-  background: #393e46;
   content: "";
-  margin: 2px;
 }
 
 input[type="checkbox"]:checked + label:after {
-  background-color: #fff;
+  background-color: #393e46;
   content: "";
   display: inline-block;
-  width: 13px;
-  height: 13px;
-  left: 6px;
-  top: -2px;
+  width: 14px;
+  height: 14px;
   position: absolute;
+  left: 3.5px;
+  top: 0px;
+  border-radius: 3px;
 }
 
 input[type="checkbox"] + label:after {
@@ -238,6 +236,7 @@ button.importButton
   z-index: 1;
   border-radius: 4px;
   width: 400px;
+  background-color: #464a4f;
 }
 
 .popup input
@@ -271,6 +270,29 @@ button.importButton
   background-image: url("./img/cancelIcon.png");
   background-size: cover;
   cursor: pointer;
+}
+
+.noContentInfo
+{
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  text-align: left;
+  font-size: 1.1rem;
+
+}
+
+.noContentInfo::after
+{
+  content: "";
+  background-color: #ffba00;
+  width: 2px;
+  height: calc(100% - 5px);
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: -15px;
 }
 
 @keyframes troll

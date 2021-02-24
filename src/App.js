@@ -11,9 +11,7 @@ class App extends React.Component {
     super();
 
     this.state = {
-      showImportPopup: false,
-      showComparePopup: false,
-      showPopup: false
+      
     }
   }
 
@@ -28,7 +26,7 @@ class App extends React.Component {
         <Main changeState={this.changeState}/>
         <ImportPopup showImportPopup={this.state.showImportPopup} changeState={this.changeState}/>
         <ComparePopup showComparePopup={this.state.showComparePopup} changeState={this.changeState}/>
-        <div class={`background ${this.state.showPopup ? "active" : ""}`}></div>
+        <div className={`background ${this.state.showPopup ? "active" : ""}`}></div>
       </React.Fragment>
       );
   }
