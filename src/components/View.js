@@ -4,7 +4,7 @@ import dateFormat from "dateformat"
 class View extends React.Component {
 
   componentDidUpdate = () => {
-    
+    console.log(this.props.documents)
   }
 
   dateToString = (date) => {
@@ -13,28 +13,18 @@ class View extends React.Component {
   
   render() { 
     return(
-      <div id={this.props.id} class="view">
-        <table>
-          <colgroup>
-            <col width="60%"/>
-          </colgroup>
-          <thead>
-            <tr>
-              {this.props.headerTitles.map(value => (
-                <th>{value}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.documents.map((value) => (
-              <tr key={value._id.id}>
-                <td>{value.filename}</td>
-                <td>{this.dateToString(value.date)}</td>
-                <td><input type="checkbox" checked={value.isDone} onChange={() => this.props.changeStatus(value._id)}/></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div id={this.props.id} className="view">
+        {this.props.documents.map((value) => (
+          <div className="documentEntry" key={value._id}>
+            <div className="checkbox">
+              <input checked={value.isDone} onChange={() => this.props.changeStatus(value._id)} type="checkbox" id={`checkbox-${value._id.id}`}/>
+              <label for={`checkbox-${value._id.id}`}></label>
+            </div>
+            <div className="filename">{value.filename}</div>
+            <div className="path">C:\Users\Alexander Ulrich\Downloads\Test.xlsx</div>
+            <div className="date">{this.dateToString(value.date)}</div>
+          </div>
+        ))}
       </div>
     )
   }
