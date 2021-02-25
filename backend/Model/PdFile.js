@@ -7,4 +7,4 @@ const PdFile = new Schema({
   content: Array
 });
 
-module.exports = model("PdFile", NvFile);
+module.exports = model("PdFile", PdFile);

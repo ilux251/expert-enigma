@@ -254,6 +254,12 @@ button.importButton
   color: #343a40;
 }
 
+button:disabled
+{
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
 .buttonContainer button:first-child
 {
   margin-right: 4%;

@@ -5,6 +5,15 @@ const {ipcRenderer} = window.require("electron");
 
 class ImportPopup extends React.Component {
 
+    constructor () 
+    {
+      super();
+
+      this.state = {
+        inputImport: false
+      }
+    }
+
 		componentDidMount = () => 
 		{
 
@@ -15,14 +24,12 @@ class ImportPopup extends React.Component {
 			this.props.changeState({key: "showImportPopup", value: false})
 			this.props.changeState({key: "showPopup", value: false})
     }
-
-		createNvFile = () =>
+    
+		createFile = (event) =>
 		{
       let inputImport = this.state.inputImport;
-      console.log("inputimport", inputImport)
       readXlsxFile(inputImport).then(rows => {
-        console.log("from excel =>", rows)
-        ipcRenderer.send("nv/create-file", {filename: inputImport.name, date: new Date(), isDone: false, content: rows});
+        ipcRenderer.send(event, {filename: inputImport.name, date: new Date(), isDone: false, content: rows});
       })
 		}
 
@@ -48,7 +55,7 @@ class ImportPopup extends React.Component {
 
     changeState = (state) =>
     {
-      this.setState(state)
+      this.setState(state);
     }
 
     render() {
@@ -59,8 +66,8 @@ class ImportPopup extends React.Component {
 								<div><input id="inputImport" type="file" placeholder="Datei auswählen" onChange={(e) => this.changeState({inputImport: e.target.files[0]})}/></div>
 								<div><input type="text" placeholder="Datum setzen"/></div>
 								<div className="buttonContainer">
-									<button onClick={this.createNvFile}>NV</button>
-									<button>PD</button>
+									<button disabled={!this.state.inputImport} onClick={() => this.createFile("nv/create-file")}>NV</button>
+									<button disabled={!this.state.inputImport} onClick={() => this.createFile("pd/create-file")}>PD</button>
 								</div>
 							</div>
             </div>

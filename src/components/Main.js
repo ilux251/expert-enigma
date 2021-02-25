@@ -22,10 +22,16 @@ class Main extends React.Component {
   }
   componentDidMount = () =>
   {
-    ipcRenderer.on("nv/get-files/reply", (_, data) => {
-      this.setState ({nvFiles: data})
+    this.getData("pd/get-files", "pdFiles");
+    this.getData("nv/get-files", "nvFiles");
+  }
+  
+  getData = (event, key) =>
+  {
+    ipcRenderer.on(event + "/reply", (_, data) => {
+      this.setState ({[key]: data})
     })
-    ipcRenderer.send("nv/get-files");
+    ipcRenderer.send(event);
   }
 
   showComparePopup = () =>
@@ -64,6 +70,7 @@ class Main extends React.Component {
             <div className="tabs">
               <button id="nvTab" onClick={() => this.changeView("nvView")}>NV Dateien</button>
               <button id="pdTab" onClick={() => this.changeView("pdView")}>PD Dateien</button>
+              <button id="compareTab" oncClick={() => this.changeView("compareView")}>Vergleich</button>
             </div>
             <View id="nvView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.nvFiles} changeStatus={this.changeStatusForNvFile}/>
             <View id="pdView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.pdFiles} changeStatus={this.changeStatusForPdFile}/>

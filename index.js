@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const mongoose = require("mongoose");
 const path = require("path");
 const NvFileApi = require("./backend/API/NvFile");
+const PdFileApi = require("./backend/API/PdFile");
 const {spawn} = require("child_process");
 const os = require("os");
 const fs = require("fs");
@@ -50,6 +51,7 @@ function createWindow () {
   })
 
   NvFileApi(win);
+  PdFileApi(win);
 
   win.loadURL(path.join(__dirname, "dist", "index.html"));
 
