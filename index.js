@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const path = require("path");
 const NvFileApi = require("./backend/API/NvFile");
 const {spawn} = require("child_process");
-const {homedir} = require("os");
-const {mkdirSync} = require("fs");
+const os = require("os");
+const fs = require("fs");
 
 
 require('electron-reload')(__dirname, {
@@ -13,9 +13,12 @@ require('electron-reload')(__dirname, {
 
 const url = 'mongodb://localhost:27018/testdb';
 
-const databasepath = path.join(homedir(),"sanrit-data");
+const databasepath = path.join(os.homedir(),"sanrit-data");
 console.log(databasepath);
-mkdirSync(databasepath);
+
+if (!fs.existsSync(databasepath)) {
+  fs.mkdirSync(databasepath);
+}
 
 const pipe = spawn("mongod", ["-dbpath=" + databasepath, "-port", "27018"]);
 
