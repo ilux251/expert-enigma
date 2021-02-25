@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const path = require("path");
 const NvFileApi = require("./backend/API/NvFile");
 const {spawn} = require("child_process");
+const {homedir} = require("os");
+const {mkdirSync} = require("fs");
+
 
 require('electron-reload')(__dirname, {
   electron: path.join(__dirname, "node_modules", ".bin", "electron")
@@ -10,7 +13,11 @@ require('electron-reload')(__dirname, {
 
 const url = 'mongodb://localhost:27018/testdb';
 
-const pipe = spawn("mongod", ["-dbpath=D:\\mongodb\\data", "-port", "27018"]);
+const databasepath = path.join(homedir(),"sanrit-data");
+console.log(databasepath);
+mkdirSync(databasepath);
+
+const pipe = spawn("mongod", ["-dbpath=" + databasepath, "-port", "27018"]);
 
 pipe.stdout.on("data", function (data) {
   console.log(data.toString("utf8"));
