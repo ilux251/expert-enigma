@@ -7,13 +7,7 @@ class NvFileController
   }
 
   createFile = (data) => {
-    return NvFile.insertMany(data)
-      .then(response => {
-        return response;
-      })
-      .catch(error => {
-        return error
-      });
+    return NvFile.insertMany(data);
   }
 
   deleteFile = (id) => {

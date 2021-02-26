@@ -7,13 +7,7 @@ class PdFileController
   }
 
   createFile = (data) => {
-    return PdFile.insertMany(data)
-      .then(response => {
-        return response;
-      })
-      .catch(error => {
-        return error
-      });
+    return PdFile.insertMany(data);
   }
 
   deleteFile = (id) => {

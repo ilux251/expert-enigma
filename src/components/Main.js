@@ -1,25 +1,21 @@
 import React from 'react';
 import View from './View';
+import CompareView from './CompareView';
 
 const {ipcRenderer} = window.require("electron");
-const mongoose = window.require("mongoose");
-const ObjectId = mongoose.Types.ObjectId;
-
-ObjectId.prototype.valueOf = function () {
-	return this.toString();
-};
 
 class Main extends React.Component {
 
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
 
     this.state = {
-      currentTab: "nvView",
       nvFiles: [],
-      pdFiles: []
+      pdFiles: [],
+      compareFiles: ["test"]
     }
   }
+
   componentDidMount = () =>
   {
     this.getData("pd/get-files", "pdFiles");
@@ -34,19 +30,9 @@ class Main extends React.Component {
     ipcRenderer.send(event);
   }
 
-  showComparePopup = () =>
-  {
-    this.props.changeState({key: "showComparePopup", value: true})
-    this.props.changeState({key: "showPopup", value: true})
-  }
-  changeView = (clickedTab) => 
-  {
-    this.setState({currentTab: clickedTab});
-  }
-
   changeStatusForNvFile = (id) => 
   {
-    this.setState({nvFiles: this.getToggledMapById(this.state.nvFiles, id)});  
+    this.setState({nvFiles: this.getToggledMapById(this.state.nvFiles, id)});
   } 
 
   changeStatusForPdFile = (id) => 
@@ -59,21 +45,27 @@ class Main extends React.Component {
       return file._id == id ? {...file, isDone: !file.isDone} : file;
     });
   }
+
+  showCompareTabButton = () => 
+  {
+    if (this.state.compareFiles.length > 0)
+    {
+      return (<button id="compareTab" onClick={() => this.props.changeState({key: "currentTab", value: "compareView"})}>Vergleich</button>)
+    }
+  }
  
    render() {
       return (
         <main>
-          <div className={`tabContainer ${this.state.currentTab}`}>
-            <div id="compareButton">
-              {/* <button onClick={this.showComparePopup}>vergleichen</button> */}
-            </div>
+          <div className={`tabContainer ${this.props.currentTab}`}>
             <div className="tabs">
-              <button id="nvTab" onClick={() => this.changeView("nvView")}>NV Dateien</button>
-              <button id="pdTab" onClick={() => this.changeView("pdView")}>PD Dateien</button>
-              <button id="compareTab" oncClick={() => this.changeView("compareView")}>Vergleich</button>
+              <button id="nvTab" onClick={() => this.props.changeState({key: "currentTab", value: "nvView"})}>NV Dateien</button>
+              <button id="pdTab" onClick={() => this.props.changeState({key: "currentTab", value: "pdView"})}>PD Dateien</button>
+              {this.showCompareTabButton()}
             </div>
-            <View id="nvView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.nvFiles} changeStatus={this.changeStatusForNvFile}/>
-            <View id="pdView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.pdFiles} changeStatus={this.changeStatusForPdFile}/>
+            <View id="nvView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.nvFiles} isInSelection={this.props.isInSelection} changeSelection={this.props.changeSelection} />
+            <View id="pdView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.pdFiles} isInSelection={this.props.isInSelection} changeSelection={this.props.changeSelection}/>
+            <CompareView id="compareView" documents={this.state.compareFiles}/>
           </div>
         </main>
       );

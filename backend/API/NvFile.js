@@ -4,8 +4,8 @@ const {ipcMain} = require("electron");
 module.exports = (win) => {
   ipcMain.on("nv/create-file", (_, data) => {
     NvFileController.createFile(data)
-      .then((response) => {
-        win.send("nv/create-file/reply", response);
+      .then((_) => {
+        win.send("nv/create-file/reply", "Nv-Datei wurde in die Datenbank hinzugefügt.");
       })
       .catch(console.error);
   });

@@ -14,15 +14,32 @@ class ImportPopup extends React.Component {
       }
     }
 
-		componentDidMount = () => 
-		{
+    componentDidMount = () => {
+      ipcRenderer.on("nv/create-file/reply", (_, data) => {
+        console.log("ImportPopup", data);
+        ipcRenderer.send("nv/get-files");
+        this.clearInput();
+      });
 
-		}
+      ipcRenderer.on("pd/create-file/reply", (_, data) => {
+        console.log("ImportPopup", data);
+        ipcRenderer.send("pd/get-files");
+        this.clearInput();
+      });
+    }
 
     closePopup = () =>
     {
-			this.props.changeState({key: "showImportPopup", value: false})
-			this.props.changeState({key: "showPopup", value: false})
+			this.props.changeState({key: "showImportPopup", value: false});
+			this.props.changeState({key: "showPopup", value: false});
+      this.clearInput();
+    }
+
+    clearInput = () => {
+      let input = document.getElementById("inputImport");
+      input.value = "";
+      
+      this.setState({inputImport: false})
     }
     
 		createFile = (event) =>
@@ -32,26 +49,6 @@ class ImportPopup extends React.Component {
         ipcRenderer.send(event, {filename: inputImport.name, date: new Date(), isDone: false, content: rows});
       })
 		}
-
-    componentDidMount = () =>
-    {
-      ipcRenderer.on("nv/create-file/reply", this.eventHandler);
-    }
-
-    componentWillUnmount = () => 
-    {
-      ipcRenderer.removeListener("nv/create-file/reply", this.removeHandler);
-    }
-
-    eventHandler = (_, data) =>
-    {
-      console.log("eventHandler", data);
-    }
-
-    removeHandler = (_, data) =>
-    {
-      console.log("removeHandler", data);
-    }
 
     changeState = (state) =>
     {

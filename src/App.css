@@ -19,17 +19,14 @@ header
   color: #fff;
   font-size: 10px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding-top: 20px;
   padding-right: 25px;
 }
 
-header .iconButton
+.funktionsLeiste
 {
-  position: absolute;
-  right: 0;
-  top: 4%;
-  transform: translateY(-50%);
+  display: flex;
 }
 
 main
@@ -72,14 +69,16 @@ button
 }
 
 .nvView #nvTab,
-.pdView #pdTab
+.pdView #pdTab,
+.compareView #compareTab
 {
   color: #fafafa;
   border-top: 2px solid #fafafa;
 }
 
 .nvView #nvView,
-.pdView #pdView
+.pdView #pdView,
+.compareView #compareView
 {
   display: block;
 }
@@ -93,7 +92,7 @@ button
   height: 50px;
   border-radius: 4px;
   justify-content: space-around;
-  border-left: 3px solid #ffba00; /* green: #05c705 */
+  border-left: 4px solid #ffba00; /* green: #05c705 */
 }
 
 .documentEntry > div
@@ -126,15 +125,12 @@ input[type="checkbox"] + label:before {
   height: 16px;
   width: 16px;
   border-radius: 5px;
+  content: "";
 }
 
 input[type="checkbox"] + label {
   position: relative;
   top: -5px;
-}
-
-input[type="checkbox"]:checked + label:before {
-  content: "";
 }
 
 input[type="checkbox"]:checked + label:after {
@@ -144,7 +140,7 @@ input[type="checkbox"]:checked + label:after {
   width: 14px;
   height: 14px;
   position: absolute;
-  left: 3.5px;
+  left: 3px;
   top: 0px;
   border-radius: 3px;
 }
@@ -250,8 +246,8 @@ button.importButton
 .buttonContainer button
 {
   width: calc(50% - 2%);
-  background-color: #81b29a;
-  color: #343a40;
+  background-color: #05c705;
+  color: #fff;
 }
 
 button:disabled

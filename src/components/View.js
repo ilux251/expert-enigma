@@ -17,7 +17,7 @@ class View extends React.Component {
         {this.props.documents.length > 0 ? this.props.documents.map((value) => (
           <div className="documentEntry" key={value._id.id}>
             <div className="checkbox">
-              <input checked={value.isDone} onChange={() => this.props.changeStatus(value._id)} type="checkbox" id={`checkbox-${value._id.id}`}/>
+              <input checked={this.props.isInSelection(value._id.id)} onChange={() => this.props.changeSelection(value._id.id)} type="checkbox" id={`checkbox-${value._id.id}`}/>
               <label htmlFor={`checkbox-${value._id.id}`}></label>
             </div>
             <div className="filename">{value.filename}</div>
