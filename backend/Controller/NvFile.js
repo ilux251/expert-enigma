@@ -11,9 +11,7 @@ class NvFileController
   }
 
   deleteFile = (id) => {
-    return NvFile.deleteOne({_id: id}).then(response => {
-      return response;
-    });
+    return NvFile.deleteOne({_id: id});
   }
 }
 

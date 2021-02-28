@@ -11,8 +11,7 @@ class Main extends React.Component {
 
     this.state = {
       nvFiles: [],
-      pdFiles: [],
-      compareFiles: ["test"]
+      pdFiles: []
     }
   }
 
@@ -48,7 +47,7 @@ class Main extends React.Component {
 
   showCompareTabButton = () => 
   {
-    if (this.state.compareFiles.length > 0)
+    if (this.props.comparedData.length > 0)
     {
       return (<button id="compareTab" onClick={() => this.props.changeState({key: "currentTab", value: "compareView"})}>Vergleich</button>)
     }
@@ -65,7 +64,7 @@ class Main extends React.Component {
             </div>
             <View id="nvView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.nvFiles} isInSelection={this.props.isInSelection} changeSelection={this.props.changeSelection} />
             <View id="pdView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.pdFiles} isInSelection={this.props.isInSelection} changeSelection={this.props.changeSelection}/>
-            <CompareView id="compareView" documents={this.state.compareFiles}/>
+            <CompareView id="compareView" documents={this.props.comparedData}/>
           </div>
         </main>
       );

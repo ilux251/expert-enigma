@@ -68,6 +68,19 @@ button
   position: relative;
 }
 
+.lookupView
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #54595f;
+  width: calc(100% - 60px);
+  height: 100%;
+  padding: 0 30px;
+  overflow: auto;
+  height: 100%;
+}
+
 .nvView #nvTab,
 .pdView #pdTab,
 .compareView #compareTab
@@ -92,6 +105,10 @@ button
   height: 50px;
   border-radius: 4px;
   justify-content: space-around;
+}
+
+.documentEntry.status
+{
   border-left: 4px solid #ffba00; /* green: #05c705 */
 }
 
@@ -295,6 +312,32 @@ button:disabled
   position: absolute;
   top: 5px;
   left: -15px;
+}
+
+.compareItem
+{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 1.1em;
+}
+
+.compareItem .description
+{
+  flex-basis: 50%;
+}
+
+.description .failureMsg
+{
+  color: #Ef601e;
+  font-size: .9rem;
+}
+
+.nvFileCompare,
+.pdFileCompare
+{
+  flex-basis: 25%;
+  text-align: center;
 }
 
 @keyframes troll

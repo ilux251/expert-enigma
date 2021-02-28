@@ -8,17 +8,30 @@ class Header extends React.Component {
     this.props.changeState({key: "showPopup", value: true})
   }
 
-   render() {
-      return (
-        <header>
-          <div className="funktionsLeiste">
-            Funktionsleiste
-            <div>NvFiles selected: {this.props.selection.nvView.length}</div>
-            <div>PdFiles selected: {this.props.selection.pdView.length}</div>
-          </div>
-          <button className="importButton" onClick={this.showPopup}><span className="icon"></span>Importieren</button>
-        </header>
-      );
-   }
+  compareButton = () =>
+  {
+    let {pdView, nvView} = this.props.selection;
+
+    console.log(pdView, nvView);
+
+    if (pdView &&
+        nvView &&
+        Object.keys(this.props.selection.pdView).length == 1 && 
+        Object.keys(this.props.selection.nvView).length == 1)
+    {
+      return <button onClick={this.props.compareFiles}>Vergleichen</button>
+    }
+  }
+
+  render() {
+    return (
+      <header>
+        <div className="funktionsLeiste">
+          {this.compareButton()}
+        </div>
+        <button className="importButton" onClick={this.showPopup}><span className="icon"></span>Importieren</button>
+      </header>
+    );
+  }
 }
 export default Header;

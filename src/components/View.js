@@ -4,7 +4,7 @@ import dateFormat from "dateformat"
 class View extends React.Component {
 
   componentDidUpdate = () => {
-    console.log(this.props.documents)
+    
   }
 
   dateToString = (date) => {
@@ -15,9 +15,9 @@ class View extends React.Component {
     return(
       <div id={this.props.id} className="view">
         {this.props.documents.length > 0 ? this.props.documents.map((value) => (
-          <div className="documentEntry" key={value._id.id}>
+          <div className="documentEntry status" key={value._id.id}>
             <div className="checkbox">
-              <input checked={this.props.isInSelection(value._id.id)} onChange={() => this.props.changeSelection(value._id.id)} type="checkbox" id={`checkbox-${value._id.id}`}/>
+              <input checked={this.props.isInSelection(value._id.id)} onChange={() => this.props.changeSelection(value)} type="checkbox" id={`checkbox-${value._id.id}`}/>
               <label htmlFor={`checkbox-${value._id.id}`}></label>
             </div>
             <div className="filename">{value.filename}</div>

@@ -16,5 +16,5 @@ module.exports = (win) => {
         win.send("nv/get-files/reply", response);
       })
       .catch(error => console.log("get-files", error))
-  })
+  });
 }
