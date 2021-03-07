@@ -15,10 +15,10 @@ class View extends React.Component {
     return(
       <div id={this.props.id} className="view">
         {this.props.documents.length > 0 ? this.props.documents.map((value) => (
-          <div className="documentEntry status" key={value._id.id}>
+          <div className="documentEntry status" key={value._id}>
             <div className="checkbox">
-              <input checked={this.props.isInSelection(value._id.id)} onChange={() => this.props.changeSelection(value)} type="checkbox" id={`checkbox-${value._id.id}`}/>
-              <label htmlFor={`checkbox-${value._id.id}`}></label>
+              <input checked={this.props.isInSelection(value._id)} onChange={() => this.props.changeSelection(value)} type="checkbox" id={`checkbox-${value._id}`}/>
+              <label htmlFor={`checkbox-${value._id}`}></label>
             </div>
             <div className="filename">{value.filename}</div>
             <div className="path">C:\Users\Alexander Ulrich\Downloads\Test.xlsx</div>

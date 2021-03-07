@@ -85,7 +85,7 @@ class CompareView extends React.Component
       <div id={this.props.id} className="view">
         {this.props.documents.map(value => (
           <div className="documentEntry" onClick={() => this.selectItem(value._id)}>
-            <div key={value._id.id}>{this.dateToString(value.date)}</div>
+            <div key={value._id}>{this.dateToString(value.date)}</div>
           </div>
         ))}
         <div className={`lookupView ${!this.state.selectedItem ? "hidden" : ""}`}>
@@ -97,4 +97,4 @@ class CompareView extends React.Component
   }
 }
 
-module.exports = CompareView;
+export default CompareView;

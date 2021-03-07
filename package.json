@@ -2,16 +2,14 @@
   "name": "sanrit",
   "version": "0.1.0",
   "private": true,
+  "main": "public/electron.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
-    "child_process": "^1.0.2",
+    "ajv": "^7.1.1",
     "dateformat": "^4.5.1",
-    "electron-reload": "^1.5.0",
-    "mongodb": "^3.6.4",
-    "mongoose": "^5.11.17",
-    "mongoose-id-validator": "^0.6.0",
+    "nedb-promises": "^4.1.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.2",
@@ -23,8 +21,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron": "electron .",
-    "build-exe": "electron-packager . CompareTool --platform=win32 --arch=x64",
-    "watch": "parcel watch public/index.html --no-hmr --public-url ."
+    "watch": "parcel watch public/index.html --out-dir build --no-hmr --public-url .",
+    "react-build": "parcel build public/index.html --out-dir build --public-url ./",
+    "pack": "electron-builder",
+    "electron-pack": "electron-builder -c.extraMetadata.main=public/electron.js --win --x64"
   },
   "eslintConfig": {
     "extends": [
@@ -45,8 +45,28 @@
     ]
   },
   "devDependencies": {
-    "electron": "^11.2.3",
-    "electron-packager": "^15.2.0",
-    "parcel": "^1.12.4"
+    "@babel/core": "^7.13.8",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
+    "@babel/plugin-transform-react-jsx": "^7.12.17",
+    "@babel/preset-env": "^7.13.9",
+    "@babel/preset-react": "^7.12.13",
+    "babel": "^6.23.0",
+    "cross-env": "^7.0.3",
+    "electron": "^11.3.0",
+    "electron-builder": "^22.10.5",
+    "parcel-bundler": "^1.12.3"
+  },
+  "build": {
+    "appId": "com.sanrit.compare",
+    "files": [
+      "public/**/*",
+      "build/**/*",
+      {
+        "from": "src",
+        "to": "build",
+        "filter": "**/*"
+      }
+    ]
   }
 }

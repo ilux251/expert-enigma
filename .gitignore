@@ -1,7 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+
+
 package-lock.json
-*win32-x64/
 .vscode/
 
 # dependencies
@@ -14,8 +15,10 @@ package-lock.json
 
 # production
 /build
-/CompareTool-*
 /dist
+*win32-x64/
+.parcel-cache
+*.db
 
 # misc
 .DS_Store

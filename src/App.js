@@ -52,13 +52,13 @@ class App extends React.Component {
 
     if (currentTab in selection)
     {
-      if (file._id.id in selection[currentTab])
+      if (file._id in selection[currentTab])
       {
-        delete selection[currentTab][file._id.id]
+        delete selection[currentTab][file._id]
       }
       else
       {
-        selection[currentTab][file._id.id] = file;
+        selection[currentTab][file._id] = file;
       }
 
       this.setState({selection});
