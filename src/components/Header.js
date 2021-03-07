@@ -17,7 +17,11 @@ class Header extends React.Component {
         Object.keys(pdView).length == 1 && 
         Object.keys(nvView).length == 1)
     {
-      return <div className="compareData" onClick={this.props.compareFiles}></div>
+      return (
+        <div className="compareData iconButton" onClick={this.props.compareFiles}>
+          <span className="image"></span>
+          <span className="label">Dateien <br/>vergleichen</span>
+        </div>)
     }
   }
 
@@ -30,7 +34,11 @@ class Header extends React.Component {
         Object.keys(pdView).length > 0 || 
         Object.keys(nvView).length > 0)
     {
-      return <div className="deleteData" ></div>
+      return (
+        <div className="deleteData iconButton" onClick={this.props.compareFiles}>
+          <span className="image"></span>
+          <span className="label">Dateien <br/>löschen</span>
+        </div>)
     }
   }
 
