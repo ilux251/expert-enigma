@@ -20,10 +20,11 @@ class PdFileController
     return this.db.insert(data);
   }
 
-  deleteFile = (id) => {
-    return this.db.deleteOne({_id: id}).then(response => {
-      return response;
-    });
+  deleteFiles = async (ids) => {
+    for (let id of ids)
+    {
+      this.db.remove({_id: id});
+    }
   }
 }
 

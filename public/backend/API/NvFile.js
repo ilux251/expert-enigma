@@ -17,4 +17,10 @@ module.exports = (win) => {
       })
       .catch(error => console.log("get-files", error))
   });
+
+  ipcMain.on("nv/delete-files", async (_, ids) => {
+    await NvFileController.deleteFiles(ids);
+
+    win.send("nv/delete-files/reply", "Dateien wurden gelöscht");
+  });
 }

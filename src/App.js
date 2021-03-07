@@ -3,6 +3,7 @@ import './App.css';
 import Header from './components/Header';
 import Main from './components/Main';
 import ImportPopup from './components/ImportPopup';
+import DeletePopup from './components/DeletePopup';
 
 const {ipcRenderer} = window.require("electron");
 
@@ -16,14 +17,13 @@ class App extends React.Component {
                   nvView: {},
                   compareView: {}},
       currentTab: "nvView",
-      compareKeys: ["aus Belegnr.", "DL (MW) abs"],
+      compareKeys: ["aus Belegnr.", "DL Anteil"],
       comparedData: []
     }
   }
 
   componentDidMount = () => {
     ipcRenderer.on("compare-save/create/reply", (_, response) => {
-      console.log("xxx create compare-save reply xxx", response);
       ipcRenderer.send("compare-save/get-all");
     });
     this.getData("compare-save/get-all", "comparedData");
@@ -44,6 +44,10 @@ class App extends React.Component {
   isInSelection = (target) => {
     return (this.state.currentTab in this.state.selection && 
             target in this.state.selection[this.state.currentTab]);
+  }
+
+  resetSelection = () => {
+    this.setState({selection: {pdView: {}, nvView: {}, compareView: {}}});
   }
 
   changeSelection = (file) => {
@@ -97,8 +101,6 @@ class App extends React.Component {
       let key = row[nvFileHeader[this.state.compareKeys[0]]];
       let value = row[nvFileHeader[this.state.compareKeys[1]]];
 
-      console.log("xxx nvFile xxx", key, value);
-
       if (compareMap[key])
       {
         compareMap[key].nvFile += value;
@@ -113,8 +115,6 @@ class App extends React.Component {
     {
       let key = row[pdFileHeader[this.state.compareKeys[0]]];
       let value = row[pdFileHeader[this.state.compareKeys[1]]];
-      
-      console.log("xxx pdFile xxx", key, value);
 
       if (compareMap[key])
       {
@@ -128,15 +128,15 @@ class App extends React.Component {
 
     compareMap["comparedFiles"] = [Object.keys(nvView)[0], Object.keys(pdView)[0]];
 
-    console.log(compareMap)
-
     ipcRenderer.send("compare-save/create", {compare: compareMap, date: new Date()});
+
+    this.resetSelection();
   }
 
   render() {
     return (
       <React.Fragment>
-        <Header changeState={this.changeState} selection={this.state.selection} compareFiles={this.compareFiles} />
+        <Header changeState={this.changeState} selection={this.state.selection} compareFiles={this.compareFiles}/>
         <Main changeState={this.changeState} 
               isInSelection={this.isInSelection} 
               changeSelection={this.changeSelection}
@@ -144,6 +144,7 @@ class App extends React.Component {
               currentTab={this.state.currentTab} 
               comparedData={this.state.comparedData} />
         <ImportPopup showImportPopup={this.state.showImportPopup} changeState={this.changeState}/>
+        <DeletePopup showDeletePopup={this.state.showDeletePopup} selection={this.state.selection} changeState={this.changeState} resetSelection={this.resetSelection}/>
         <div className={`background ${this.state.showPopup ? "active" : ""}`}></div>
       </React.Fragment>
       );

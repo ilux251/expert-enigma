@@ -17,4 +17,10 @@ module.exports = (win) => {
       })
       .catch(console.error);
   });
+
+  ipcMain.on("compare-save/delete-files", async (_, ids) => {
+    await CompareSaveController.deleteFiles(ids);
+
+    win.send("compare-save/delete-files/reply", "Dateien wurden gelöscht");
+  });
 }

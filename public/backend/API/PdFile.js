@@ -16,5 +16,11 @@ module.exports = (win) => {
         win.send("pd/get-files/reply", response);
       })
       .catch(error => console.log("get-files", error))
-  })
+  });
+
+  ipcMain.on("pd/delete-files", async (_, ids) => {
+    await PdFileController.deleteFiles(ids);
+
+    win.send("pd/delete-files/reply", "Dateien wurden gelöscht");
+  });
 }

@@ -288,6 +288,14 @@ button.importButton
   border-radius: 4px;
   width: 400px;
   background-color: #464a4f;
+  color: #fff;
+}
+
+.deletePopup .delete
+{
+  background-color: #f44336;
+  color: #fff;
+  margin-top: 20px;
 }
 
 .popup input

@@ -1,10 +1,12 @@
 import React from 'react';
 
+const {ipcRenderer} = window.require("electron");
+
 class Header extends React.Component {
 
-  showPopup = () =>
+  showPopup = (popup) =>
   {
-    this.props.changeState({key: "showImportPopup", value: true})
+    this.props.changeState({key: "show" + popup, value: true})
     this.props.changeState({key: "showPopup", value: true})
   }
 
@@ -37,7 +39,7 @@ class Header extends React.Component {
          Object.keys(compareView).length > 0))
     {
       return (
-        <div className="deleteData iconButton" onClick={this.props.compareFiles}>
+        <div className="deleteData iconButton" onClick={() => this.showPopup("DeletePopup")}>
           <span className="image"></span>
           <span className="label">Dateien <br/>löschen</span>
         </div>)
@@ -51,7 +53,7 @@ class Header extends React.Component {
           {this.compareButton()}
           {this.deleteButton()}
         </div>
-        <button className="importButton" onClick={this.showPopup}><span className="icon"></span>Importieren</button>
+        <button className="importButton" onClick={() => this.showPopup("ImportPopup")}><span className="icon"></span>Importieren</button>
       </header>
     );
   }
