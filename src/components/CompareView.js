@@ -24,6 +24,11 @@ class CompareView extends React.Component
     this.setState({selectedItem})
   }
 
+  diffItems = (nvBetrag = 0, pdBetrag = 0) => {
+
+    return nvBetrag - pdBetrag
+  }
+
   prepareCompareMap = () => {
     let selectedItem = this.state.selectedItem;
     let failureItems = [];
@@ -39,21 +44,20 @@ class CompareView extends React.Component
           {
             items.push(
               <div className="compareItem">
-                <div className="description">{item}</div>
+                <div className="belegnr">{item}</div>
                 <div className="nvFileCompare">{selectedItem.compare[item].nvFile}</div>
                 <div className="pdFileCompare">{selectedItem.compare[item].pdFile}</div>
+                <div className="diffCompare"></div>
               </div>)
           }
           else
           {
             failureItems.push(
               <div className="compareItem">
-                <div className="description">
-                  <div>{item}</div>
-                  <div className="failureMsg">Fehler in der Datei ...</div>
-                </div>
+                <div className="belegnr">{item}</div>
                 <div className="nvFileCompare">{selectedItem.compare[item].nvFile}</div>
                 <div className="pdFileCompare">{selectedItem.compare[item].pdFile}</div>
+                <div className="diffCompare">{this.diffItems(selectedItem.compare[item].nvFile, selectedItem.compare[item].pdFile)}</div>
               </div>)
           }
         }
@@ -68,8 +72,13 @@ class CompareView extends React.Component
 
     let failureContainer = (
       <div>
+        <div className="compareHeader">
+          <div>Belegnr</div>
+          <div>NV</div>
+          <div>PD</div>
+          <div>Diff</div>
+        </div>
         <div className="failureContainer">{failureItems}</div>
-        <div onClick={() => this.setState({isShowMore: !this.state.isShowMore})}>Show More ...</div>
       </div>
     )
 
@@ -89,7 +98,10 @@ class CompareView extends React.Component
           </div>
         ))}
         <div className={`lookupView ${!this.state.selectedItem ? "hidden" : ""}`}>
-          <div onClick={() => this.selectItem(null)}>&lt; Back</div>
+          <div className="flexContainer">
+            <div onClick={() => this.selectItem(null)}>&lt; Back</div>
+            <div onClick={() => this.setState({isShowMore: !this.state.isShowMore})}>Show More ...</div>
+          </div>
           {this.renderCompareView()}
         </div>
       </div>
