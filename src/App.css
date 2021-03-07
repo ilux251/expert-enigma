@@ -29,7 +29,6 @@ header
 .funktionsLeiste
 {
   display: flex;
-  
 }
 
 .compareData,
@@ -40,6 +39,7 @@ header
   height: 28px;
   display: inline-block;
   margin-right: 15px;
+  cursor: pointer;
 }
 
 .compareData .image
@@ -58,7 +58,6 @@ header
   width: 24px;
   height: 24px;
   background-size: cover;
-  cursor: pointer;
 }
 
 .iconButton .label
@@ -114,10 +113,26 @@ button
   left: 0;
   background-color: #54595f;
   width: calc(100% - 60px);
-  height: 100%;
+  height: calc(100% - 50px);
   padding: 0 30px;
-  overflow: auto;
-  height: 100%;
+  overflow-y: scroll;
+}
+
+.gesamtBetrag
+{
+  position: absolute;
+  top: calc(100% - 50px);
+  width: calc(100% - 60px);
+  height: 50px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+}
+
+.gesamtBetrag > *
+{
+  flex-basis: 25%;
+  text-align: center;
 }
 
 .nvView #nvTab,
@@ -218,22 +233,6 @@ input[type="checkbox"] + label:after {
 .documentEntry .date
 {
 
-}
-
-#compareButton
-{
-  position: absolute;
-  right: 0; 
-	top: 0px;
-}
-
-#compareButton button
-{
-  border-radius: 20px;
-	padding-left: 20px;
-	padding-right: 20px;
-	background-color: #070A15;
-	color: #03121f;
 }
 
 button.importButton
@@ -358,33 +357,16 @@ button:disabled
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
-  font-size: 1.1em;
+  font-size: 1rem;
   border-bottom: 2px solid #464a4f;
   padding-bottom: 10px;
-}
-
-@keyframes troll
-{
-  from
-  {
-    transform: rotateZ(0deg);
-    opacity: 0.5;
-    background-color: rgb(0, 0, 0);
-  }
-
-  to
-  {
-    transform: rotateZ(360deg);
-    opacity: 1;
-    background-color: rgb(255, 255, 255);
-  }
 }
 
 .compareHeader {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-  font-size: 20px;
+  font-weight: bold;
 }
 
 .compareHeader div:nth-child(1),
@@ -405,4 +387,39 @@ button:disabled
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+}
+
+*::-webkit-scrollbar-track
+{
+  background-color: #54595f;
+  width: 8px;
+}
+
+*::-webkit-scrollbar
+{
+  width: 5px;
+  background-color: #Ef601e;
+}
+
+*::-webkit-scrollbar-thumb
+{
+  width: 8px;
+  background-color: #Ef601e;
+}
+
+@keyframes troll
+{
+  from
+  {
+    transform: rotateZ(0deg);
+    opacity: 0.5;
+    background-color: rgb(0, 0, 0);
+  }
+
+  to
+  {
+    transform: rotateZ(360deg);
+    opacity: 1;
+    background-color: rgb(255, 255, 255);
+  }
 }

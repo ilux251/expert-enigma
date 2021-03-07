@@ -27,12 +27,14 @@ class Header extends React.Component {
 
   deleteButton = () =>
   {
-    let {pdView, nvView} = this.props.selection;
+    let {pdView, nvView, compareView} = this.props.selection;
 
     if (pdView &&
         nvView &&
-        Object.keys(pdView).length > 0 || 
-        Object.keys(nvView).length > 0)
+        compareView &&
+        (Object.keys(pdView).length > 0 || 
+         Object.keys(nvView).length > 0 ||
+         Object.keys(compareView).length > 0))
     {
       return (
         <div className="deleteData iconButton" onClick={this.props.compareFiles}>

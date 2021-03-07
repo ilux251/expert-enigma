@@ -8,7 +8,10 @@ class CompareView extends React.Component
 
     this.state = {
       selectedItem: null,
-      isShowMore: false
+      isShowMore: false,
+      gesamtBetragNv: 0,
+      gesamtBetragPd: 0,
+      gesamtBetragDiff: 0
     }
   }
 
@@ -18,15 +21,27 @@ class CompareView extends React.Component
 
   selectItem = (id) => {
     let selectedItem = id ? this.props.documents.find(item => item._id == id) : null;
+    let gesamtBetragNv = 0;
+    let gesamtBetragPd = 0;
+    let gesamtBetragDiff = 0;
 
-    console.log("selelected item", selectedItem, id);
+    for (let item in selectedItem.compare)
+    {
+      gesamtBetragNv += "nvFile" in selectedItem.compare[item] ? selectedItem.compare[item].nvFile : 0;
+      gesamtBetragPd += "pdFile" in selectedItem.compare[item] ? selectedItem.compare[item].pdFile : 0;
+      gesamtBetragDiff += this.diffItems(selectedItem.compare[item].nvFile, selectedItem.compare[item].pdFile);
+    }
 
-    this.setState({selectedItem})
+    this.setState({
+      selectedItem,
+      gesamtBetragNv,
+      gesamtBetragPd,
+      gesamtBetragDiff})
   }
 
-  diffItems = (nvBetrag = 0, pdBetrag = 0) => {
-
-    return nvBetrag - pdBetrag
+  diffItems = (nvBetrag = 0, pdBetrag = 0) => 
+  {
+    return Math.abs(nvBetrag - pdBetrag);
   }
 
   prepareCompareMap = () => {
@@ -93,16 +108,26 @@ class CompareView extends React.Component
     return (
       <div id={this.props.id} className="view">
         {this.props.documents.map(value => (
-          <div className="documentEntry" onClick={() => this.selectItem(value._id)}>
-            <div key={value._id}>{this.dateToString(value.date)}</div>
+          <div className="documentEntry">
+            <div className="checkbox">
+              <input checked={this.props.isInSelection(value._id)} onChange={() => this.props.changeSelection(value)} type="checkbox" id={`checkbox-${value._id}`}/>
+              <label htmlFor={`checkbox-${value._id}`}></label>
+            </div>
+            <div key={value._id} onClick={() => this.selectItem(value._id)}>{this.dateToString(value.date)}</div>
           </div>
         ))}
         <div className={`lookupView ${!this.state.selectedItem ? "hidden" : ""}`}>
           <div className="flexContainer">
-            <div onClick={() => this.selectItem(null)}>&lt; Back</div>
+            <div onClick={() => this.setState({selectedItem: null})}>&lt; Back</div>
             <div onClick={() => this.setState({isShowMore: !this.state.isShowMore})}>Show More ...</div>
           </div>
           {this.renderCompareView()}
+        </div>
+        <div className={`gesamtBetrag ${!this.state.selectedItem ? "hidden" : ""}`}>
+          <div className="label">Gesamtbetrag</div>
+          <div className="summe">{this.state.gesamtBetragNv} €</div>
+          <div className="summe">{this.state.gesamtBetragPd} €</div>
+          <div className="sume">{this.state.gesamtBetragDiff} €</div>
         </div>
       </div>
     )

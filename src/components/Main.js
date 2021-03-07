@@ -64,7 +64,7 @@ class Main extends React.Component {
             </div>
             <View id="nvView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.nvFiles} isInSelection={this.props.isInSelection} changeSelection={this.props.changeSelection} />
             <View id="pdView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.pdFiles} isInSelection={this.props.isInSelection} changeSelection={this.props.changeSelection}/>
-            <CompareView id="compareView" documents={this.props.comparedData}/>
+            <CompareView id="compareView" documents={this.props.comparedData} isInSelection={this.props.isInSelection} changeSelection={this.props.changeSelection}/>
           </div>
         </main>
       );

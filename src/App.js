@@ -3,7 +3,6 @@ import './App.css';
 import Header from './components/Header';
 import Main from './components/Main';
 import ImportPopup from './components/ImportPopup';
-import ComparePopup from './components/ComparePopup';
 
 const {ipcRenderer} = window.require("electron");
 
@@ -14,7 +13,8 @@ class App extends React.Component {
 
     this.state = {
       selection: {pdView: {},
-                  nvView: {}},
+                  nvView: {},
+                  compareView: {}},
       currentTab: "nvView",
       compareKeys: ["aus Belegnr.", "DL (MW) abs"],
       comparedData: []
@@ -96,10 +96,12 @@ class App extends React.Component {
     {
       let key = row[nvFileHeader[this.state.compareKeys[0]]];
       let value = row[nvFileHeader[this.state.compareKeys[1]]];
-      
+
+      console.log("xxx nvFile xxx", key, value);
+
       if (compareMap[key])
       {
-        compareMap[key].nvFile = value;
+        compareMap[key].nvFile += value;
       }
       else 
       {
@@ -112,9 +114,11 @@ class App extends React.Component {
       let key = row[pdFileHeader[this.state.compareKeys[0]]];
       let value = row[pdFileHeader[this.state.compareKeys[1]]];
       
+      console.log("xxx pdFile xxx", key, value);
+
       if (compareMap[key])
       {
-        compareMap[key].pdFile = value;
+        compareMap[key].pdFile = "pdFile" in compareMap[key] ? compareMap[key].pdFile + value : value;
       }
       else 
       {
@@ -140,7 +144,6 @@ class App extends React.Component {
               currentTab={this.state.currentTab} 
               comparedData={this.state.comparedData} />
         <ImportPopup showImportPopup={this.state.showImportPopup} changeState={this.changeState}/>
-        <ComparePopup showComparePopup={this.state.showComparePopup} changeState={this.changeState}/>
         <div className={`background ${this.state.showPopup ? "active" : ""}`}></div>
       </React.Fragment>
       );
