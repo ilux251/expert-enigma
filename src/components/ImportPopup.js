@@ -46,7 +46,7 @@ class ImportPopup extends React.Component {
 		{
       let inputImport = this.state.inputImport;
       readXlsxFile(inputImport).then(rows => {
-        ipcRenderer.send(event, {filename: inputImport.name, date: new Date(), isDone: false, content: rows});
+        ipcRenderer.send(event, {filename: inputImport.name, date: new Date(), isDone: false, content: rows, path: inputImport.path});
       })
 		}
 

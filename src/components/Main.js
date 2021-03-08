@@ -52,23 +52,29 @@ class Main extends React.Component {
       return (<button id="compareTab" onClick={() => this.props.changeState({key: "currentTab", value: "compareView"})}>Vergleich</button>)
     }
   }
+
+  getDocumentFilename = (id) => 
+  {
+    let files = Object.assign({}, this.state.nvFiles, this.state.pdFiles);
+    return id in files ? files[id] : "Datei existiert nicht mehr in der Datenbank.";
+  }
  
-   render() {
-      return (
-        <main>
-          <div className={`tabContainer ${this.props.currentTab}`}>
-            <div className="tabs">
-              <button id="nvTab" onClick={() => this.props.changeState({key: "currentTab", value: "nvView"})}>NV Dateien</button>
-              <button id="pdTab" onClick={() => this.props.changeState({key: "currentTab", value: "pdView"})}>PD Dateien</button>
-              {this.showCompareTabButton()}
-            </div>
-            <View id="nvView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.nvFiles} isInSelection={this.props.isInSelection} changeSelection={this.props.changeSelection} />
-            <View id="pdView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.pdFiles} isInSelection={this.props.isInSelection} changeSelection={this.props.changeSelection}/>
-            <CompareView id="compareView" documents={this.props.comparedData} isInSelection={this.props.isInSelection} changeSelection={this.props.changeSelection}/>
+  render() {
+    return (
+      <main>
+        <div className={`tabContainer ${this.props.currentTab}`}>
+          <div className="tabs">
+            <button id="nvTab" onClick={() => this.props.changeState({key: "currentTab", value: "nvView"})}>NV Dateien</button>
+            <button id="pdTab" onClick={() => this.props.changeState({key: "currentTab", value: "pdView"})}>PD Dateien</button>
+            {this.showCompareTabButton()}
           </div>
-        </main>
-      );
-   }
+          <View id="nvView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.nvFiles} isInSelection={this.props.isInSelection} changeSelection={this.props.changeSelection} />
+          <View id="pdView" headerTitles={["Dateiname", "Datum", "Abgeschlossen"]} documents={this.state.pdFiles} isInSelection={this.props.isInSelection} changeSelection={this.props.changeSelection}/>
+          <CompareView id="compareView" documents={this.props.comparedData} isInSelection={this.props.isInSelection} changeSelection={this.props.changeSelection}/>
+        </div>
+      </main>
+    );
+  }
 }
 
 export default Main;

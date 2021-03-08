@@ -223,11 +223,20 @@ input[type="checkbox"] + label:after {
 .documentEntry .filename
 {
   flex-basis: 35%;
+  max-width: 35%;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .documentEntry .path
 {
   color: #908f8f;
+  flex-basis: 35%;
+  max-width: 35%;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .documentEntry .date
@@ -395,6 +404,20 @@ button:disabled
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+}
+
+.documentEntry .comparedFilename
+{
+  flex-basis: 70%;
+  display: flex;
+}
+
+.documentEntry .comparedFilename img
+{
+  width: 24px;
+  height: 24px;
+  margin: 0 10px;
+  align-self: center;
 }
 
 *::-webkit-scrollbar-track

@@ -82,6 +82,12 @@ class App extends React.Component {
     return headerTitle;
   }
 
+  roundTo = (number, places) => 
+  {
+    let factor = 10 ** places;
+    return Math.round(number * factor) / factor;
+  }
+
   compareFiles = () => 
   {
     let {pdView, nvView} = this.state.selection;
@@ -101,6 +107,8 @@ class App extends React.Component {
       let key = row[nvFileHeader[this.state.compareKeys[0]]];
       let value = row[nvFileHeader[this.state.compareKeys[1]]];
 
+      value = this.roundTo(value, 2);
+
       if (compareMap[key])
       {
         compareMap[key].nvFile += value;
@@ -116,6 +124,8 @@ class App extends React.Component {
       let key = row[pdFileHeader[this.state.compareKeys[0]]];
       let value = row[pdFileHeader[this.state.compareKeys[1]]];
 
+      value = this.roundTo(value, 2);
+
       if (compareMap[key])
       {
         compareMap[key].pdFile = "pdFile" in compareMap[key] ? compareMap[key].pdFile + value : value;
@@ -126,7 +136,7 @@ class App extends React.Component {
       }
     }
 
-    compareMap["comparedFiles"] = [Object.keys(nvView)[0], Object.keys(pdView)[0]];
+    compareMap["comparedFiles"] = [nvFile.filename, pdFile.filename];
 
     ipcRenderer.send("compare-save/create", {compare: compareMap, date: new Date()});
 

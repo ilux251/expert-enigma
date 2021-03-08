@@ -8,7 +8,7 @@ class View extends React.Component {
   }
 
   dateToString = (date) => {
-    return dateFormat(date, "dd.mm.yyyy")
+    return dateFormat(date, "dd.mm.yyyy hh:mm:ss")
   }
   
   render() { 
@@ -21,7 +21,7 @@ class View extends React.Component {
               <label htmlFor={`checkbox-${value._id}`}></label>
             </div>
             <div className="filename">{value.filename}</div>
-            <div className="path">C:\Users\Alexander Ulrich\Downloads\Test.xlsx</div>
+            <div className="path">{value.path}</div>
             <div className="date">{this.dateToString(value.date)}</div>
           </div>
         )) : 
