@@ -109,19 +109,19 @@ class CompareView extends React.Component
     return (
       <div id={this.props.id} className="view">
         {this.props.documents.map(value => (
-          <div className="documentEntry">
+          <div key={value._id} className="documentEntry">
             <div className="checkbox">
               <input checked={this.props.isInSelection(value._id)} onChange={() => this.props.changeSelection(value)} type="checkbox" id={`checkbox-${value._id}`}/>
               <label htmlFor={`checkbox-${value._id}`}></label>
             </div>
-            <div className="comparedFilename">{value.compare.comparedFiles[0]} <img src={compareButtonIcon}/> {value.compare.comparedFiles[1]}</div>
-            <div key={value._id} onClick={() => this.selectItem(value._id)}>{this.dateToString(value.date)}</div>
+            <div className="comparedFilename clickable" onClick={() => this.selectItem(value._id)}>{value.compare.comparedFiles[0]} <img src={compareButtonIcon}/> {value.compare.comparedFiles[1]}</div>
+            <div>{this.dateToString(value.date)}</div>
           </div>
         ))}
         <div className={`lookupView ${!this.state.selectedItem ? "hidden" : ""}`}>
           <div className="flexContainer">
-            <div onClick={() => this.setState({selectedItem: null})}>&lt; Back</div>
-            <div onClick={() => this.setState({isShowMore: !this.state.isShowMore})}>Show More ...</div>
+            <div className="clickable" onClick={() => this.setState({selectedItem: null})}>&lt; Back</div>
+            <div className="clickable" onClick={() => this.setState({isShowMore: !this.state.isShowMore})}>Show More ...</div>
           </div>
           {this.renderCompareView()}
         </div>

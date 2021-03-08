@@ -412,6 +412,11 @@ button:disabled
   display: flex;
 }
 
+.clickable
+{
+  cursor: pointer;
+}
+
 .documentEntry .comparedFilename img
 {
   width: 24px;
