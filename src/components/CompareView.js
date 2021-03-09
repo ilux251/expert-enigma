@@ -17,7 +17,7 @@ class CompareView extends React.Component
   }
 
   dateToString = (date) => {
-    return dateFormat(date, "dd.mm.yyyy hh:mm:ss")
+    return dateFormat(date, "dd.mm.yyyy HH:MM:ss")
   }
 
   selectItem = (id) => {

@@ -13,7 +13,7 @@ class NvFileController
   }
 
   getFiles = () => {
-    return this.db.find({});
+    return this.db.find({}).sort({date: -1});
   }
 
   createFile = (data) => {
