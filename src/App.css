@@ -104,6 +104,7 @@ button
   height: 100%;
   display: none;
   position: relative;
+  overflow-y: scroll;
 }
 
 .lookupView
@@ -122,9 +123,9 @@ button
 {
   position: absolute;
   top: calc(100% - 50px);
-  width: calc(100% - 60px);
+  width: calc(100% - 212px);
   height: 50px;
-  padding: 0 30px;
+  padding: 0 30px 0 182px;
   display: flex;
   align-items: center;
 }
@@ -150,11 +151,16 @@ button
   display: block;
 }
 
+#compareView.itemSelected .documentEntry
+{
+  display: none;
+}
+
 .documentEntry
 {
   background: #54595f;
   display: flex;
-  width: 100%;
+  width: calc(100% - 4px);
   margin-top: 15px;
   height: 50px;
   border-radius: 4px;
@@ -369,21 +375,27 @@ button:disabled
   left: -15px;
 }
 
-.compareItem
+.compareHeader,
+.expandHeader
 {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
-  font-size: 1rem;
-  border-bottom: 2px solid #464a4f;
-  padding-bottom: 10px;
+  font-weight: bold;
+  height: 50px;
+  align-items: center;
+  cursor: pointer;
 }
 
-.compareHeader {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  font-weight: bold;
+.compareHeader div:nth-child(1),
+.expandHeader  div:nth-child(1)
+{
+  position: absolute;
+  left: 20px;
+}
+
+.compareHeader div:nth-child(2)
+{
+  text-align: left;
 }
 
 .compareHeader div:nth-child(1),
@@ -392,7 +404,7 @@ button:disabled
   text-align: left;
 }
 
-.compareHeader > *,
+.compareHeader > *:not(:first-child),
 .compareItem > *
 {
   flex-basis: 25%;
@@ -425,9 +437,110 @@ button:disabled
   align-self: center;
 }
 
+.showMoreButton
+{
+  background-color: #464a4f;
+  width: 100%;
+  height: 50px;
+  border-radius: 4px 4px 0px 4px;
+  position: relative;
+}
+
+.back
+{
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.back img
+{
+  width: 14px;
+  height: 14px;
+}
+
+.compareContainer
+{
+  margin-bottom: 20px;
+}
+
+.showMoreContainer
+{
+  display: none;
+  margin-bottom: 20px;
+}
+
+.showMore .compareHeader
+{
+  display: flex;
+}
+
+.showMore .expandHeader
+{
+  display: none;
+}
+
+.showMore .showMoreContainer
+{
+  display: block;
+}
+
+.compareHeader,
+.expandHeader
+{
+  width: calc(100% - 152px);
+  padding-left: 152px;
+  height: 50px;
+  align-items: center;
+}
+
+.compareHeader
+{
+  display: none;
+}
+
+.expandHeader > div:not(:first-child)
+{
+  flex-basis: 25%;
+  text-align: center;
+}
+
+.compareHeader img,
+.expandHeader img
+{
+  width: 16px;
+  height: 16px;
+}
+
+.compareItem
+{
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  position: relative;
+  padding-left: 100px;
+  background-color: #464a4f;
+  height: 30px;
+  align-items: center;
+  width: calc(100% - 152px);
+  margin-left: 50px;
+  border-left: 2px solid #fff;
+}
+
+.compareItem::before
+{
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 15px;
+  background-color: #fff;
+  width: 80px;
+  height: 2px;
+}
+
 *::-webkit-scrollbar-track
 {
-  background-color: #54595f;
+  background-color: #464a4f;
   width: 8px;
 }
 

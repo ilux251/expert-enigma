@@ -61,7 +61,7 @@ class ImportPopup extends React.Component {
 							<div className="closePopup" onClick={this.closePopup}></div>
 							<div className="container">
 								<div><input id="inputImport" type="file" placeholder="Datei auswählen" onChange={(e) => this.changeState({inputImport: e.target.files[0]})}/></div>
-								<div><input type="text" placeholder="Datum setzen"/></div>
+								{/* <div><input type="text" placeholder="Datum setzen"/></div> */}
 								<div className="buttonContainer">
 									<button disabled={!this.state.inputImport} onClick={() => this.createFile("nv/create-file")}>NV</button>
 									<button disabled={!this.state.inputImport} onClick={() => this.createFile("pd/create-file")}>PD</button>

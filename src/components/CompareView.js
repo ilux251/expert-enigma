@@ -1,6 +1,9 @@
 import React from 'react';
 import dateFormat from 'dateformat';
 import compareButtonIcon from "../img/compareButtonIcon.png";
+import leftArrowButton from "../img/left-arrow.png";
+import rightArrowButton from "../img/right-arrow.png";
+import downArrowButton from "../img/down-arrow.png";
 
 class CompareView extends React.Component
 {
@@ -9,10 +12,16 @@ class CompareView extends React.Component
 
     this.state = {
       selectedItem: null,
-      isShowMore: false,
+      isShowMoreFailure: false,
+      isShowMoreItem: false,
       gesamtBetragNv: 0,
       gesamtBetragPd: 0,
-      gesamtBetragDiff: 0
+      gesamtBetragDiff: 0,
+      gesamtFailureBetragNv: 0,
+      gesamtFailureBetragPd: 0,
+      gesamtFailureBetragDiff: 0,
+      gesamtItemsBetragNv: 0,
+      gesamtItemsBetragPd: 0
     }
   }
 
@@ -25,19 +34,41 @@ class CompareView extends React.Component
     let gesamtBetragNv = 0;
     let gesamtBetragPd = 0;
     let gesamtBetragDiff = 0;
+    let gesamtFailureBetragNv = 0;
+    let gesamtFailureBetragPd = 0;
+    let gesamtFailureBetragDiff = 0;
+    let gesamtItemsBetragNv = 0;
+    let gesamtItemsBetragPd = 0;
 
     for (let item in selectedItem.compare)
     {
       gesamtBetragNv += "nvFile" in selectedItem.compare[item] ? selectedItem.compare[item].nvFile : 0;
       gesamtBetragPd += "pdFile" in selectedItem.compare[item] ? selectedItem.compare[item].pdFile : 0;
       gesamtBetragDiff += this.diffItems(selectedItem.compare[item].nvFile, selectedItem.compare[item].pdFile);
+
+      if (selectedItem.compare[item].pdFile !== selectedItem.compare[item].nvFile)
+      {
+        gesamtFailureBetragNv += "nvFile" in selectedItem.compare[item] ? selectedItem.compare[item].nvFile : 0;
+        gesamtFailureBetragPd += "pdFile" in selectedItem.compare[item] ? selectedItem.compare[item].pdFile : 0;
+        gesamtFailureBetragDiff += this.diffItems(selectedItem.compare[item].nvFile, selectedItem.compare[item].pdFile);
+      }
+      else
+      {
+        gesamtItemsBetragNv += "nvFile" in selectedItem.compare[item] ? selectedItem.compare[item].nvFile : 0;
+        gesamtItemsBetragPd += "pdFile" in selectedItem.compare[item] ? selectedItem.compare[item].pdFile : 0;
+      }
     }
 
     this.setState({
       selectedItem,
       gesamtBetragNv,
       gesamtBetragPd,
-      gesamtBetragDiff})
+      gesamtBetragDiff,
+      gesamtFailureBetragNv,
+      gesamtFailureBetragPd,
+      gesamtFailureBetragDiff,
+      gesamtItemsBetragNv,
+      gesamtItemsBetragPd})
   }
 
   diffItems = (nvBetrag = 0, pdBetrag = 0) => 
@@ -87,19 +118,53 @@ class CompareView extends React.Component
     let [failureItems, items] = this.prepareCompareMap();
 
     let failureContainer = (
-      <div>
-        <div className="compareHeader">
-          <div>Belegnr</div>
-          <div>NV</div>
-          <div>PD</div>
-          <div>Diff</div>
+      <React.Fragment>
+        <div className={`compareContainer ${this.state.isShowMoreFailure ? "showMore" : ""}`}>
+          <div className="showMoreButton" onClick={() => this.setState({isShowMoreFailure: !this.state.isShowMoreFailure})}>
+            <div className="expandHeader">
+              <div><img src={rightArrowButton} /></div>
+              <div></div>
+              <div>{this.state.gesamtFailureBetragNv}€</div>
+              <div>{this.state.gesamtFailureBetragPd}€</div>
+              <div>{this.state.gesamtFailureBetragDiff}€</div>
+            </div>
+            <div className="compareHeader">
+              <div><img src={downArrowButton} /></div>
+              <div>Belegnr</div>
+              <div>NV</div>
+              <div>PD</div>
+              <div>Diff</div>
+            </div>
+          </div>
+          <div className="showMoreContainer failureContainer">
+            {failureItems}
+          </div>
         </div>
-        <div className="failureContainer">{failureItems}</div>
-      </div>
+      </React.Fragment>
     )
 
     let itemContainer = (
-      <div className={`itemContainer ${this.state.isShowMore ? "" : "hidden"}`}>{items}</div>
+      <div className={`compareContainer ${this.state.isShowMoreItem ? "showMore" : ""}`}>
+        <div className="showMoreButton" onClick={() => this.setState({isShowMoreItem: !this.state.isShowMoreItem})}>
+          <div className="expandHeader">
+            <div><img src={rightArrowButton} /></div>
+            <div></div>
+            <div>{this.state.gesamtItemsBetragNv}€</div>
+            <div>{this.state.gesamtItemsBetragPd}€</div>
+            <div>-</div>
+          </div>
+          <div className="compareHeader">
+            <div><img src={downArrowButton} /></div>
+            <div>Belegnr</div>
+            <div>NV</div>
+            <div>PD</div>
+            <div></div>
+          </div>
+        </div>
+        <div className="showMoreContainer itemContainer">
+          {items}
+        </div>
+      </div>
     )
 
     return [failureContainer, itemContainer];
@@ -107,7 +172,7 @@ class CompareView extends React.Component
 
   render = () => {
     return (
-      <div id={this.props.id} className="view">
+      <div id={this.props.id} className={`view ${this.state.selectedItem ? "itemSelected" : ""}`}>
         {this.props.documents.map(value => (
           <div key={value._id} className="documentEntry">
             <div className="checkbox">
@@ -119,17 +184,14 @@ class CompareView extends React.Component
           </div>
         ))}
         <div className={`lookupView ${!this.state.selectedItem ? "hidden" : ""}`}>
-          <div className="flexContainer">
-            <div className="clickable" onClick={() => this.setState({selectedItem: null})}>&lt; Back</div>
-            <div className="clickable" onClick={() => this.setState({isShowMore: !this.state.isShowMore})}>Show More ...</div>
-          </div>
+          <div className="back clickable" onClick={() => this.setState({selectedItem: null})}><img src={leftArrowButton} /> Zurück</div>
           {this.renderCompareView()}
         </div>
         <div className={`gesamtBetrag ${!this.state.selectedItem ? "hidden" : ""}`}>
           <div className="label">Gesamtbetrag</div>
-          <div className="summe">{this.state.gesamtBetragNv} €</div>
-          <div className="summe">{this.state.gesamtBetragPd} €</div>
-          <div className="sume">{this.state.gesamtBetragDiff} €</div>
+          <div className="summe">{this.state.gesamtBetragNv}€</div>
+          <div className="summe">{this.state.gesamtBetragPd}€</div>
+          <div className="sume">{this.state.gesamtBetragDiff}€</div>
         </div>
       </div>
     )

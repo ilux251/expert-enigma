@@ -93,16 +93,15 @@ class App extends React.Component {
     let {pdView, nvView} = this.state.selection;
     let pdKey = Object.keys(pdView)[0];
     let nvKey = Object.keys(nvView)[0];
-    let pdFile = pdView[pdKey];
-    let nvFile = nvView[nvKey];
+    let pdFile = Object.assign({}, pdView[pdKey]);
+    let nvFile = Object.assign({}, nvView[nvKey]);
 
-    // side-effects for pdFile and nvFile -> remove header title
-    let pdFileHeader = this.getHeaderTitleToMap(pdFile["content"].shift());
-    let nvFileHeader = this.getHeaderTitleToMap(nvFile["content"].shift());
+    let pdFileHeader = this.getHeaderTitleToMap(pdFile["content"][0]);
+    let nvFileHeader = this.getHeaderTitleToMap(nvFile["content"][0]);
 
     let compareMap = {};
 
-    for (let row of nvFile["content"])
+    for (let row of nvFile["content"].slice(1))
     {
       let key = row[nvFileHeader[this.state.compareKeys[0]]];
       let value = row[nvFileHeader[this.state.compareKeys[1]]];
@@ -119,7 +118,7 @@ class App extends React.Component {
       }
     }
 
-    for (let row of pdFile["content"])
+    for (let row of pdFile["content"].slice(1))
     {
       let key = row[pdFileHeader[this.state.compareKeys[0]]];
       let value = row[pdFileHeader[this.state.compareKeys[1]]];
