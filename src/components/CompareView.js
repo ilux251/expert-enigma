@@ -4,6 +4,7 @@ import compareButtonIcon from "../img/compareButtonIcon.png";
 import leftArrowButton from "../img/left-arrow.png";
 import rightArrowButton from "../img/right-arrow.png";
 import downArrowButton from "../img/down-arrow.png";
+import {roundTo} from "../util";
 
 class CompareView extends React.Component
 {
@@ -124,9 +125,9 @@ class CompareView extends React.Component
             <div className="expandHeader">
               <div><img src={rightArrowButton} /></div>
               <div></div>
-              <div>{this.state.gesamtFailureBetragNv}€</div>
-              <div>{this.state.gesamtFailureBetragPd}€</div>
-              <div>{this.state.gesamtFailureBetragDiff}€</div>
+              <div>{roundTo(this.state.gesamtFailureBetragNv, 2)}€</div>
+              <div>{roundTo(this.state.gesamtFailureBetragPd, 2)}€</div>
+              <div>{roundTo(this.state.gesamtFailureBetragDiff, 2)}€</div>
             </div>
             <div className="compareHeader">
               <div><img src={downArrowButton} /></div>
@@ -149,8 +150,8 @@ class CompareView extends React.Component
           <div className="expandHeader">
             <div><img src={rightArrowButton} /></div>
             <div></div>
-            <div>{this.state.gesamtItemsBetragNv}€</div>
-            <div>{this.state.gesamtItemsBetragPd}€</div>
+            <div>{roundTo(this.state.gesamtItemsBetragNv, 2)}€</div>
+            <div>{roundTo(this.state.gesamtItemsBetragPd, 2)}€</div>
             <div>-</div>
           </div>
           <div className="compareHeader">
@@ -189,9 +190,9 @@ class CompareView extends React.Component
         </div>
         <div className={`gesamtBetrag ${!this.state.selectedItem ? "hidden" : ""}`}>
           <div className="label">Gesamtbetrag</div>
-          <div className="summe">{this.state.gesamtBetragNv}€</div>
-          <div className="summe">{this.state.gesamtBetragPd}€</div>
-          <div className="sume">{this.state.gesamtBetragDiff}€</div>
+          <div className="summe">{roundTo(this.state.gesamtBetragNv, 2)}€</div>
+          <div className="summe">{roundTo(this.state.gesamtBetragPd, 2)}€</div>
+          <div className="sume">{roundTo(this.state.gesamtBetragDiff, 2)}€</div>
         </div>
       </div>
     )

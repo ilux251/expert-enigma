@@ -20,7 +20,7 @@ class Header extends React.Component {
         Object.keys(nvView).length == 1)
     {
       return (
-        <div className="compareData iconButton" onClick={this.props.compareFiles}>
+        <div className="compareData iconButton" onClick={() => this.showPopup("ComparePopup")}>
           <span className="image"></span>
           <span className="label">Dateien <br/>vergleichen</span>
         </div>)

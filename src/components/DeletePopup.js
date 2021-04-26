@@ -15,8 +15,6 @@ class DeletePopup extends React.Component {
       let nvIds = Object.keys(this.props.selection.nvView);
       let compareIds = Object.keys(this.props.selection.compareView);
   
-      console.log("xxx", pdIds, nvIds, compareIds);
-
       this.delelteFileEvent("pd/delete-files", pdIds);
       this.delelteFileEvent("nv/delete-files", nvIds);
       this.delelteFileEvent("compare-save/delete-files", compareIds);
@@ -39,8 +37,6 @@ class DeletePopup extends React.Component {
     {
       let selection = [];
       let {pdView, nvView, compareView} = this.props.selection;
-
-      console.log("xxx", Object.keys(pdView), nvView, compareView);
 
       if (Object.keys(pdView).length > 0)
       {

@@ -16,13 +16,11 @@ class ImportPopup extends React.Component {
 
     componentDidMount = () => {
       ipcRenderer.on("nv/create-file/reply", (_, data) => {
-        console.log("ImportPopup", data);
         ipcRenderer.send("nv/get-files");
         this.clearInput();
       });
 
       ipcRenderer.on("pd/create-file/reply", (_, data) => {
-        console.log("ImportPopup", data);
         ipcRenderer.send("pd/get-files");
         this.clearInput();
       });

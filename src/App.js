@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Main from './components/Main';
 import ImportPopup from './components/ImportPopup';
 import DeletePopup from './components/DeletePopup';
+import ComparePopup from './components/ComparePopup';
 
 const {ipcRenderer} = window.require("electron");
 
@@ -17,7 +18,7 @@ class App extends React.Component {
                   nvView: {},
                   compareView: {}},
       currentTab: "nvView",
-      compareKeys: ["aus Belegnr.", "DL Anteil"],
+      compareKeys: ["aus Belegnr.", "DL Anteil", "DB Anteil"],
       comparedData: []
     }
   }
@@ -69,42 +70,20 @@ class App extends React.Component {
     }
   }
 
-  getHeaderTitleToMap = (content) => {
-    let headerTitle = {};
-
-    for (let index in content)
-    {
-      let title = content[index];
-      headerTitle = {...headerTitle,
-                     [title]: index};
-    }
-
-    return headerTitle;
-  }
-
   roundTo = (number, places) => 
   {
     let factor = 10 ** places;
     return Math.round(number * factor) / factor;
   }
 
-  compareFiles = () => 
+  compareFiles = (pdFile, nvFile, id, dl) => 
   {
-    let {pdView, nvView} = this.state.selection;
-    let pdKey = Object.keys(pdView)[0];
-    let nvKey = Object.keys(nvView)[0];
-    let pdFile = Object.assign({}, pdView[pdKey]);
-    let nvFile = Object.assign({}, nvView[nvKey]);
-
-    let pdFileHeader = this.getHeaderTitleToMap(pdFile["content"][0]);
-    let nvFileHeader = this.getHeaderTitleToMap(nvFile["content"][0]);
-
     let compareMap = {};
 
     for (let row of nvFile["content"].slice(1))
     {
-      let key = row[nvFileHeader[this.state.compareKeys[0]]];
-      let value = row[nvFileHeader[this.state.compareKeys[1]]];
+      let key = row[id];
+      let value = row[dl];
 
       value = this.roundTo(value, 2);
 
@@ -120,8 +99,8 @@ class App extends React.Component {
 
     for (let row of pdFile["content"].slice(1))
     {
-      let key = row[pdFileHeader[this.state.compareKeys[0]]];
-      let value = row[pdFileHeader[this.state.compareKeys[1]]];
+      let key = row[id];
+      let value = row[dl];
 
       value = this.roundTo(value, 2);
 
@@ -145,7 +124,7 @@ class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Header changeState={this.changeState} selection={this.state.selection} compareFiles={this.compareFiles}/>
+        <Header changeState={this.changeState} selection={this.state.selection} />
         <Main changeState={this.changeState} 
               isInSelection={this.isInSelection} 
               changeSelection={this.changeSelection}
@@ -154,6 +133,7 @@ class App extends React.Component {
               comparedData={this.state.comparedData} />
         <ImportPopup showImportPopup={this.state.showImportPopup} changeState={this.changeState}/>
         <DeletePopup showDeletePopup={this.state.showDeletePopup} selection={this.state.selection} changeState={this.changeState} resetSelection={this.resetSelection}/>
+        <ComparePopup selection={this.state.selection} showComparePopup={this.state.showComparePopup} changeState={this.changeState} compareFiles={this.compareFiles}/>
         <div className={`background ${this.state.showPopup ? "active" : ""}`}></div>
       </React.Fragment>
       );
